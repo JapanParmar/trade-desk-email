@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     npm \
     libzip-dev \
+    libpq-dev \
     && docker-php-ext-install zip pdo pdo_mysql pdo_pgsql
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -27,15 +28,6 @@ RUN php artisan view:cache || true
 
 RUN chmod -R 775 storage bootstrap/cache
 
-RUN chmod -R 775 storage bootstrap/cache
-
-COPY start.sh /usr/local/bin/start.sh
-
-RUN chmod +x /usr/local/bin/start.sh
-
 EXPOSE 10000
 
-CMD ["/usr/local/bin/start.sh"]
-
-
-# CMD php artisan serve --host=0.0.0.0 --port=$PORT
+CMD php artisan serve --host=0.0.0.0 --port=$PORT
