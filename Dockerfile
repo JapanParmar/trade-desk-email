@@ -28,6 +28,11 @@ RUN php artisan view:cache || true
 
 RUN chmod -R 775 storage bootstrap/cache
 
+# Add start script
+COPY start.sh /usr/local/bin/start.sh
+
+RUN chmod +x /usr/local/bin/start.sh
+
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+CMD ["/usr/local/bin/start.sh"]
